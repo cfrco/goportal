@@ -16,6 +16,10 @@ const (
     ROOT_DIR_NAME = ".goportal"
 )
 
+func colorize(text string, style string) string {
+    return "\x1B["+style+"m"+text+"\x1B[00m";
+}
+
 func fifoPath(filename string) string {
     if filename[0] == '/'{
         return filename
@@ -56,7 +60,7 @@ func runReceiver(){
 
     fmt.Println("goportal receiver have startd. -> "+strconv.Itoa(syscall.Getpid()))
     for {
-        fmt.Println(">>>")
+        fmt.Println(colorize(">>>","1;32"));
         message := strings.Trim(receiver.ReadMessage()," ")
         if message == "" {
             break

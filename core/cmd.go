@@ -25,7 +25,7 @@ func RunInternalCommand(cmdline string) error{
         cmd[1] = strings.Trim(cmd[1],"\" ")
         switch cmd[0]{
             case "cd" :
-                fmt.Printf(">>> Chdir( %s )\n",cmd[1])
+                fmt.Printf("Chdir( %s )\n",cmd[1])
                 return os.Chdir(cmd[1])
             default :
                 return &CmdError{"No command."} 
@@ -33,7 +33,7 @@ func RunInternalCommand(cmdline string) error{
     }else{
         switch cmd[0]{
             case "ret" :
-                fmt.Printf(">>> %d\n",LastRet)
+                fmt.Printf("%d\n",LastRet)
             case "end" :
                 return &CmdError{"command:end"}
             default :
