@@ -56,6 +56,7 @@ func runReceiver(){
 
     fmt.Println("goportal receiver have startd. -> "+strconv.Itoa(syscall.Getpid()))
     for {
+        fmt.Println(">>>")
         message := strings.Trim(receiver.ReadMessage()," ")
         if message == "" {
             break
@@ -70,7 +71,6 @@ func runReceiver(){
                 fmt.Println(err)
             }
         }else {
-            fmt.Println(">>>")
             core.LastRet = core.CallSystem(message)
         }
     }
