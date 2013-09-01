@@ -42,6 +42,14 @@ func init() {
 }
 
 func runReceiver(){
+    fifoRootPath := os.Getenv("HOME")+"/.goportal"
+    if _,err := os.Stat(fifoRootPath);err == nil {
+        if err = os.Mkdir(fifoRootPath,0600); err != nil {
+            fmt.Println(err) 
+            return 
+        }
+    }
+
     var fifoName string
     if narg == 0 {
         fifoName = fifoPath(strconv.Itoa(syscall.Getpid()))
