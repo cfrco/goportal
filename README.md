@@ -2,7 +2,7 @@
 Send command to another terminal that running goportal in Go.
 
 ## Motivation
-Since continuously, I hope i can run a shell in Vim. But i don't find a good solution. When i find `tslime.vim` (https://github.com/jgdavey/tslime.vim). But i don't use `tmux`. So I think I can write a program send command from terminal to terminal.
+Since continuously, I hope i can run a shell in Vim. But i don't find a good solution. One day, I find `tslime.vim` (https://github.com/jgdavey/tslime.vim). But i don't use `tmux`. So I think I can write a program send command from terminal to terminal.
 
 ## Installation
 Install or update 
