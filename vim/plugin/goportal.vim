@@ -7,9 +7,14 @@ function! GoPortal(...)
     call system("goportal ".cmd)
 endfunction
 
-function! GoPortalDefault(name)
-    let g:goportal_default_fifoname = a:name
+function! GoPortalDefault(...)
+    if a:1 == ""
+        echom g:goportal_default_fifoname
+    else
+        let g:goportal_default_fifoname = a:1
+    endif
 endfunction
 
-command! -nargs=+ GoPortal   call GoPortal(g:goportal_default_fifoname,<q-args>)
-command! -nargs=+ GoPortalInternal  call GoPortal("-i",g:goportal_default_fifoname,<q-args>)
+command! -nargs=+ Gp   call GoPortal(g:goportal_default_fifoname,<q-args>)
+command! -nargs=+ Gpi  call GoPortal("-i",g:goportal_default_fifoname,<q-args>)
+command! -nargs=* Gpd  call GoPortalDefault(<q-args>)
