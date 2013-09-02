@@ -44,7 +44,7 @@ func init() {
 func runReceiver(){
     fifoRootPath := os.Getenv("HOME")+"/.goportal"
     if _,err := os.Stat(fifoRootPath);err != nil {
-        if err = os.Mkdir(fifoRootPath,0600); err != nil {
+        if err = os.Mkdir(fifoRootPath,0700); err != nil {
             fmt.Println(err) 
             return 
         }
@@ -65,8 +65,14 @@ func runReceiver(){
         return 
     }
     defer receiver.Close()
+    
+    fmt.Print("goportal receiver have startd. -> ")
+    if narg == 0 {
+        fmt.Println(strconv.Itoa(syscall.Getpid())) 
+    }else {
+        fmt.Println(flag.Arg(0)) 
+    }
 
-    fmt.Println("goportal receiver have startd. -> "+strconv.Itoa(syscall.Getpid()))
     for {
         fmt.Println(colorize(">>>","1;32"));
         message := strings.Trim(receiver.ReadMessage()," ")
@@ -74,7 +80,7 @@ func runReceiver(){
             break
         }
 
-        if strings.HasPrefix(message,"\"#cmd:") {
+        if strings.HasPrefix(message,"#cmd:") {
             err := core.RunInternalCommand(message)
             if err != nil {
                 if err.Error() == "command:end" {
@@ -105,7 +111,7 @@ func runSender(){
             cmdline = strings.Join(flag.Args()[1:]," ")
 
             if flagInternal {
-                cmdline = "\"#cmd:"+cmdline 
+                cmdline = "#cmd:"+cmdline 
             }
         }else {
             cmdline = core.ArgsToCmdline(flag.Args()[1:])

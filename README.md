@@ -29,7 +29,6 @@ goportal <name> <command...>
 
 #### Send goportal interanl command
 ```
-goportal <name> "#cmd:<interna_cmd>" <args...>
 goportal -i <name> <internal_cmd> <args...>
 ```
 
