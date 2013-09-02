@@ -17,7 +17,7 @@ func (e *CmdError) Error() string {
 var LastRet int
 
 func RunInternalCommand(cmdline string) error{
-    cmdline = cmdline[6:]
+    cmdline = cmdline[5:]
     cmd := strings.SplitN(cmdline," ",2)
 
     cmd[0] = strings.ToLower(strings.Trim(cmd[0],"\" "))
