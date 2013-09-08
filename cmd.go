@@ -15,7 +15,6 @@ func (e *CmdError) Error() string {
 }
 
 var LastRet int
-var PrevCmd string
 
 func RunInternalCommand(cmdline string) error{
     cmdline = cmdline[5:]
@@ -35,6 +34,8 @@ func RunInternalCommand(cmdline string) error{
         switch cmd[0]{
             case "ret" :
                 fmt.Printf("%d\n",LastRet)
+            case "history" :
+                HistoryCmd.Display()
             case "end" :
                 return &CmdError{"command:end"}
             default :

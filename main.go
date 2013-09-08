@@ -66,7 +66,7 @@ func runReceiver(){
         return 
     }
     defer receiver.Close()
-    
+
     fmt.Print("goportal receiver have startd. -> ")
     if narg == 0 {
         fmt.Println(strconv.Itoa(syscall.Getpid())) 
@@ -74,12 +74,11 @@ func runReceiver(){
         fmt.Println(flag.Arg(0)) 
     }
 
+    HistoryCmd.Init()
+
     for {
         fmt.Println(colorize(">>>","1;32"));
         message := strings.Trim(receiver.ReadMessage()," ")
-        if message == "" {
-            break
-        }
 
         if strings.HasPrefix(message,"#cmd:") {
             err := RunInternalCommand(message)
@@ -92,16 +91,16 @@ func runReceiver(){
         }else {
             if message != ""{
                 LastRet = CallSystem(message)
-                PrevCmd = message 
-            }else {
-                LastRet = core.CallSystem(PrevCmd)
+                HistoryCmd.Push(message)
+            }else { // redo the previous command
+                LastRet = CallSystem(HistoryCmd.Peek())
             }
         }
     }
 }
 
 func runSender(){
-    if narg < 2 {
+    if narg < 1 {
         return 
     }else{
         fifoName := fifoPath(flag.Arg(0)) 
@@ -127,7 +126,6 @@ func runSender(){
 }
 
 func main() {
-    fmt.Println(cat.CatString)
     flag.Parse()
     narg = flag.NArg() 
 
