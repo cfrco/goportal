@@ -29,9 +29,12 @@ func fifoPath(filename string) string {
 }
 
 var (
+    // flags
     flagReceiver bool
     flagOriginal bool
     flagInternal bool
+
+    // global
     narg int
 )
 
@@ -89,7 +92,12 @@ func runReceiver(){
                 fmt.Println(err)
             }
         }else {
-            core.LastRet = core.CallSystem(message)
+            if message != ""{
+                core.LastRet = core.CallSystem(message)
+                core.PrevCmd = message 
+            }else {
+                core.LastRet = core.CallSystem(core.PrevCmd)
+            }
         }
     }
 }
@@ -121,6 +129,7 @@ func runSender(){
 }
 
 func main() {
+    fmt.Println(cat.CatString)
     flag.Parse()
     narg = flag.NArg() 
 

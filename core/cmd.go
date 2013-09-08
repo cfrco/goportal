@@ -15,6 +15,7 @@ func (e *CmdError) Error() string {
 }
 
 var LastRet int
+var PrevCmd string
 
 func RunInternalCommand(cmdline string) error{
     cmdline = cmdline[5:]
