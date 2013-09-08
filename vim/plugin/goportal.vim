@@ -4,7 +4,6 @@ endif
 
 function! GoPortal(...)
     let cmd = join(a:000," ")
-    echom cmd
     call system("goportal ".cmd)
 endfunction
 
