@@ -1,4 +1,4 @@
-package core
+package main
 
 /*
 int system(const char *command);

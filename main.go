@@ -9,8 +9,6 @@ import (
     "syscall"
 )
 
-import "github.com/cfrco/goportal/core"
-
 const (
     POSTFIX = ".goportal"
     ROOT_DIR_NAME = ".goportal"
@@ -29,9 +27,12 @@ func fifoPath(filename string) string {
 }
 
 var (
+    // flags
     flagReceiver bool
     flagOriginal bool
     flagInternal bool
+
+    // global
     narg int
 )
 
@@ -59,13 +60,13 @@ func runReceiver(){
         return 
     }
 
-    receiver,err := core.NewReceiver(fifoName,core.MODE_RDWR)
+    receiver,err := NewReceiver(fifoName,MODE_RDWR)
     if err != nil {
         fmt.Println(err)
         return 
     }
     defer receiver.Close()
-    
+
     fmt.Print("goportal receiver have startd. -> ")
     if narg == 0 {
         fmt.Println(strconv.Itoa(syscall.Getpid())) 
@@ -73,15 +74,14 @@ func runReceiver(){
         fmt.Println(flag.Arg(0)) 
     }
 
+    HistoryCmd.Init()
+
     for {
         fmt.Println(colorize(">>>","1;32"));
         message := strings.Trim(receiver.ReadMessage()," ")
-        if message == "" {
-            break
-        }
 
         if strings.HasPrefix(message,"#cmd:") {
-            err := core.RunInternalCommand(message)
+            err := RunInternalCommand(message)
             if err != nil {
                 if err.Error() == "command:end" {
                     break
@@ -89,17 +89,22 @@ func runReceiver(){
                 fmt.Println(err)
             }
         }else {
-            core.LastRet = core.CallSystem(message)
+            if message != ""{
+                LastRet = CallSystem(message)
+                HistoryCmd.Push(message)
+            }else { // redo the previous command
+                LastRet = CallSystem(HistoryCmd.Peek())
+            }
         }
     }
 }
 
 func runSender(){
-    if narg < 2 {
+    if narg < 1 {
         return 
     }else{
         fifoName := fifoPath(flag.Arg(0)) 
-        sender,err := core.NewSender(fifoName)
+        sender,err := NewSender(fifoName)
         if err != nil {
             fmt.Println(err)
             return 
@@ -114,7 +119,7 @@ func runSender(){
                 cmdline = "#cmd:"+cmdline 
             }
         }else {
-            cmdline = core.ArgsToCmdline(flag.Args()[1:])
+            cmdline = ArgsToCmdline(flag.Args()[1:])
         }
         sender.SendMessage(cmdline)
     }

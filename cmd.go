@@ -1,4 +1,4 @@
-package core
+package main
 
 import (
     "strings"
@@ -34,6 +34,8 @@ func RunInternalCommand(cmdline string) error{
         switch cmd[0]{
             case "ret" :
                 fmt.Printf("%d\n",LastRet)
+            case "history" :
+                HistoryCmd.Display()
             case "end" :
                 return &CmdError{"command:end"}
             default :
