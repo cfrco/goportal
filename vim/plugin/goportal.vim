@@ -4,6 +4,7 @@ endif
 
 function! GoPortal(...)
     let cmd = join(a:000," ")
+    echom cmd
     call system("goportal ".cmd)
 endfunction
 
@@ -15,6 +16,7 @@ function! GoPortalDefault(...)
     endif
 endfunction
 
-command! -nargs=+ -complete=file Gp   call GoPortal(g:goportal_default_fifoname,<q-args>)
+command! -nargs=* -complete=file Gp   call GoPortal(g:goportal_default_fifoname,<q-args>)
 command! -nargs=+ -complete=file Gpi  call GoPortal("-i",g:goportal_default_fifoname,<q-args>)
 command! -nargs=* Gpd  call GoPortalDefault(<q-args>)
+command! -nargs=0 Gpdd  call GoPortalDefault(" ")
