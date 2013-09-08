@@ -26,6 +26,10 @@ goportal -i <name> end
 ```
 goportal <name> <command...>
 ```
+#### Redo previous command
+```
+goportal <name>
+```
 
 #### Send goportal interanl command
 ```
@@ -46,6 +50,7 @@ IMPORTANT : `|` should be `"|"`,or it will be pipeline's redirection for `goport
 ```
 goportal -i <name> cd <path>     # change directory.
 goportal -i <name> ret           # display `$?`(the last command's return value).
+goportal -i <name> history       # display history commands.
 goportal -i <name> end           # end the receiver.
 ```
 
