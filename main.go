@@ -9,8 +9,6 @@ import (
     "syscall"
 )
 
-import "github.com/cfrco/goportal/core"
-
 const (
     POSTFIX = ".goportal"
     ROOT_DIR_NAME = ".goportal"
@@ -62,7 +60,7 @@ func runReceiver(){
         return 
     }
 
-    receiver,err := core.NewReceiver(fifoName,core.MODE_RDWR)
+    receiver,err := NewReceiver(fifoName,MODE_RDWR)
     if err != nil {
         fmt.Println(err)
         return 
@@ -84,7 +82,7 @@ func runReceiver(){
         }
 
         if strings.HasPrefix(message,"#cmd:") {
-            err := core.RunInternalCommand(message)
+            err := RunInternalCommand(message)
             if err != nil {
                 if err.Error() == "command:end" {
                     break
@@ -93,10 +91,10 @@ func runReceiver(){
             }
         }else {
             if message != ""{
-                core.LastRet = core.CallSystem(message)
-                core.PrevCmd = message 
+                LastRet = CallSystem(message)
+                PrevCmd = message 
             }else {
-                core.LastRet = core.CallSystem(core.PrevCmd)
+                LastRet = core.CallSystem(PrevCmd)
             }
         }
     }
@@ -107,7 +105,7 @@ func runSender(){
         return 
     }else{
         fifoName := fifoPath(flag.Arg(0)) 
-        sender,err := core.NewSender(fifoName)
+        sender,err := NewSender(fifoName)
         if err != nil {
             fmt.Println(err)
             return 
@@ -122,7 +120,7 @@ func runSender(){
                 cmdline = "#cmd:"+cmdline 
             }
         }else {
-            cmdline = core.ArgsToCmdline(flag.Args()[1:])
+            cmdline = ArgsToCmdline(flag.Args()[1:])
         }
         sender.SendMessage(cmdline)
     }
