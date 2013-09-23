@@ -55,4 +55,16 @@ goportal -i <name> end           # end the receiver.
 ```
 
 ## Vim:vim-goportal
-Coming soon.
+### Install 
+```
+cp -r vim ~/.vim/bundle/vim-goportal
+```
+### Usage
+ * `:Gpd` : set/display the default name
+ * `:Gpdd` : clear the default name
+ * `:Gp` : normal command
+ * `:Gpi` : internal command
+ * `:Gpo` : original command
+
+ * `function GoPortal(...)`
+ * `function GoPortalDefault(...)`
