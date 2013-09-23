@@ -68,3 +68,15 @@ cp -r vim ~/.vim/bundle/vim-goportal
 
  * `function GoPortal(...)`
  * `function GoPortalDefault(...)`
+
+### Example 
+```
+# terminal
+$ goportal -r test
+
+# vim
+:Gpd test
+:Gp gcc test.c -o test 
+:Gpo gcc test.c -o test ";" ./test
+:Gpi end
+```
