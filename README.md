@@ -69,6 +69,7 @@ cp -r vim ~/.vim/bundle/vim-goportal
 * `:Gp` : normal command
 * `:Gpi` : internal command
 * `:Gpo` : original command  
+* `:Gpa` : call saved command
 * `function GoPortal(...)`
 * `function GoPortalDefault(...)`
 
@@ -82,4 +83,7 @@ $ goportal -r test
 :Gp gcc test.c -o test 
 :Gpo gcc test.c -o test ";" ./test
 :Gpi end
+
+:Gpi set "l=ls -al"
+:Gpa l
 ```
