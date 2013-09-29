@@ -52,6 +52,10 @@ goportal -i <name> cd <path>     # change directory.
 goportal -i <name> ret           # display `$?`(the last command's return value).
 goportal -i <name> history       # display history commands.
 goportal -i <name> end           # end the receiver.
+goportal -i <name> set "<var-name> = <command>"
+                                 # save command
+goportal -i <name> @ <var-name>  # call command
+goportal -i <name> ls            # list all saved commands
 ```
 
 ## Vim:vim-goportal
