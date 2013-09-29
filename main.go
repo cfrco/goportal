@@ -90,8 +90,8 @@ func runReceiver(){
             }
         }else {
             if message != ""{
-                LastRet = CallSystem(message)
                 HistoryCmd.Push(message)
+                LastRet = CallSystem(message)
             }else { // redo the previous command
                 LastRet = CallSystem(HistoryCmd.Peek())
             }
